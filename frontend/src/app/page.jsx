@@ -8,35 +8,40 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/table";
 export default function Home() {
-  const [formData , setFormData] =useState([])
+  const [formData, setFormData] = useState([]);
   const [data, setData] = useState({
     name: "",
     date: "",
     password: "",
+    amount:'',
   });
   console.log(data);
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setData((prevData) => ({
-      ...prevData,
+    const { name, value } = e.target
+    setData((prevdata) => ({
+      
+      ...prevdata,
       [name]:value,
-      }))
-}
-  
+    }))
+  };
+
   const HandleSubmit = (e) => {
-    e.preventDefault(); 
-    setFormData((prev)=>[...prev ,data])
+    e.preventDefault();
+    setFormData((prev) => [...prev, data]);
     // alert(JSON.stringify(data,null,2))
-      setData   ({    name: "",
-    date: "",
-    password: "",})          
-  }
+    setData({ name: "", date: "", password: "" });
+  };
+
+  const Edit = (data) => {
+   alert()
+ }
+
   return (
     <section className="flex justify-center items-center h-[100%] w-full">
       <div className="p-[30px]  w-[600px] h-[auto]">
-        <form  className="grid grid-cols-2 gap-[20px]  text-[#000]" >
+        <form className="grid grid-cols-2 gap-[20px]  text-[#000]">
           <input
             className="text-[#000]  border-1"
             type="text"
@@ -50,8 +55,7 @@ export default function Home() {
             name="date"
             id=""
             placeholder="Date"
-                 onChange={handleChange}
-        
+            onChange={handleChange}
           />
           <input
             placeholder="Password"
@@ -59,30 +63,40 @@ export default function Home() {
             type="password"
             name="password"
             id=""
-                 onChange={handleChange}
+            onChange={handleChange}
+          />
+           <input
+            className="text-[#000]  border-1"
+            type="number"
+            placeholder="amount"
+            name="amount"
+            onChange={handleChange}
           />
           <button onClick={HandleSubmit}>Submit</button>
         </form>
         <Table>
-  <TableCaption>A list of your recent invoices.</TableCaption>
-  <TableHeader>
-    <TableRow>
-      <TableHead className="w-[100px]">Invoice</TableHead>
-      <TableHead>Status</TableHead>
-      <TableHead>Method</TableHead>
-      <TableHead className="text-right">Amount</TableHead>
-    </TableRow>
-  </TableHeader>
+          <TableCaption>A list of your recent invoices.</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[100px]">Invoice</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Method</TableHead>
+              <TableHead className="text-right">Amount</TableHead>
+            </TableRow>
+          </TableHeader>
           <TableBody>
-            {Array.isArray(formData) && formData.map((data, index) => (
-  <TableRow key={index}>
-    <TableCell className="font-medium">{data.name}</TableCell>
-    <TableCell>{data.date}</TableCell>
-    <TableCell>{data.password}</TableCell>
-  </TableRow>
-))}
-  </TableBody>
-</Table>
+            {Array.isArray(formData) &&
+              formData.map((data, index) => (
+                <TableRow key={index}>
+                  <TableCell className="font-medium">{data.name}</TableCell>
+                  <TableCell>{data.date}</TableCell>
+                  <TableCell>{data.password}</TableCell>
+                  <TableCell>{data.amount}</TableCell>
+                    <TableCell><button className="cursor-pointer"  onClick={()=>Edit({data})}>Edit</button></TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
       </div>
     </section>
   );
